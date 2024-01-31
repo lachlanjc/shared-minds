@@ -1,12 +1,26 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { processImage } from "./process-image";
+// import Tilt from "react-parallax-tilt";
 
 import "./page.css";
+
+const COLORS = [
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-yellow-500",
+  "bg-green-500",
+  "bg-blue-500",
+  "bg-indigo-500",
+  "bg-purple-500",
+  "bg-pink-500",
+];
 
 interface Friend {
   name: string;
   photo: any;
+  color: (typeof COLORS)[number];
   thoughts: Array<string>;
 }
 
@@ -14,90 +28,120 @@ export default function Page() {
   const dragRef = useRef(null);
   const fileInputRef = useRef(null);
   const [friends, setFriends] = useState<Array<Friend>>([]);
+
   return (
     <>
+      <div className="hidden bg-blue-500 bg-green-500 bg-indigo-500 bg-orange-500 bg-pink-500 bg-purple-500 bg-red-500 bg-rose-500 bg-yellow-500" />
       <div className="page">
-        <motion.div className="friends" ref={dragRef}>
+        <motion.div className="friends outline-none" ref={dragRef}>
           {friends.map((friend, index) => (
             <motion.div
               key={friend.name}
               className="friend"
               // whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              // whileTap={{ scale: 0.9 }}
+              whileDrag={{ scale: 0.95 }}
               drag
-              dragConstraints={dragRef}
+              // dragConstraints={dragRef}
               dragElastic={0.2}
             >
               {/* <div className="rounded-lg shadow-xl m-4 w-[320px]"> */}
+              {/* <canvas
+                id={friend.name} */}
+              {/* <Tilt
+                glareEnable={true}
+                glareMaxOpacity={0.75}
+                glarePosition="all"
+                glareBorderRadius="5px"
+                tiltMaxAngleX={10}
+                tiltMaxAngleY={10}
+                perspective={750}
+                scale={1.0625}
+              > */}
               <img
                 src={
-                  // render File object as URL
-                  friend.photo instanceof File
+                  friend.photo instanceof Blob
                     ? URL.createObjectURL(friend.photo)
                     : friend.photo
                 }
                 alt={friend.name}
                 draggable={false}
-                width={148 * 3}
-                height={185 * 3}
+                // width={148 * 2}
+                // height={185 * 2}
+                width={256}
+                height={256}
                 className="rounded-xl shadow-xl"
               />
+              {/* </Tilt> */}
               {/* <h3 className='font-bold mt-2'>{friend.name}</h3> */}
-              {/* </div> */}
-              <ul>
+              <ul
+                className="relative -mt-4 ml-6"
+                // style={{ marginLeft: COLORS.indexOf(friend.color) * 8 }}
+              >
                 {friend.thoughts.map((thought, index) => (
-                  <li key={index}>{thought}</li>
+                  <motion.li
+                    key={index}
+                    whileHover={{ x: 10 }}
+                    className={`${friend.color} mb-1 w-[256px] rounded-lg px-3 py-2 text-white first:rounded-t-2xl`}
+                  >
+                    {thought}
+                  </motion.li>
                 ))}
+                <input
+                  type="text"
+                  className="border-1 w-[256px] rounded-lg bg-white p-2 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  onKeyUp={(e) => {
+                    // add thought when you press enter
+                    if (e.key === "Enter") {
+                      setFriends([
+                        ...friends.slice(0, index),
+                        {
+                          ...friends[index],
+                          thoughts: [
+                            ...friends[index].thoughts,
+                            e.currentTarget.value,
+                          ],
+                        },
+                        ...friends.slice(index + 1),
+                      ]);
+                      e.currentTarget.value = "";
+                    }
+                  }}
+                />
               </ul>
-              <input
-                type="text"
-                onKeyUp={(e) => {
-                  // add thought when you press enter
-                  if (e.key === "Enter") {
-                    setFriends([
-                      ...friends.slice(0, index),
-                      {
-                        ...friends[index],
-                        thoughts: [
-                          ...friends[index].thoughts,
-                          e.currentTarget.value,
-                        ],
-                      },
-                      ...friends.slice(index + 1),
-                    ]);
-                    e.currentTarget.value = "";
-                  }
-                }}
-              />
             </motion.div>
           ))}
         </motion.div>
         <input
           type="file"
           ref={fileInputRef}
-          onChange={(e) => {
+          onChange={async (e) => {
             const file = e.currentTarget.files?.[0];
             console.log(file);
             if (file) {
               const reader = new FileReader();
-              reader.onload = (e) => {
+              reader.onload = async (e) => {
+                const photo = await processImage(file);
                 setFriends((f) => [
                   ...f,
                   {
-                    name: new Date().toISOString(),
-                    photo: file,
+                    // name: new Date().toISOString(),
+                    name: file.name.split(".")[0],
+                    photo,
                     thoughts: [],
+                    color: COLORS[Math.floor(Math.random() * COLORS.length)],
                   },
                 ]);
               };
               reader.readAsDataURL(file);
             }
           }}
+          className="hidden"
         />
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="addFriend fixed bottom-4 right-4 rounded-full bg-red-500 p-2 text-white"
+          className="addFriend fixed bottom-4 right-4 rounded-full bg-rose-500 p-2 text-white shadow-2xl"
           onClick={() => {
             // const name = prompt("Friend name") ?? "New friend";
             // setFriends((f) => [
@@ -108,6 +152,7 @@ export default function Page() {
             //     thoughts: [],
             //   },
             // ]);
+            // @ts-expect-error click is a function
             fileInputRef.current?.click();
           }}
         >

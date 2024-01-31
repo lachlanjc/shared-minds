@@ -31,6 +31,7 @@ body {
     sans-serif,
     system-ui;
   font-synthesis-weight: none;
+  background-image: linear-gradient(to bottom, white, #dfdfdf);
 }
 
 body::after {
@@ -66,7 +67,7 @@ body::after {
   border-radius: 99999px;
   min-width: 48px;
   min-height: 48px;
-  filter: drop-shadow(0 0 8px var(--section-color));
+  /* filter: drop-shadow(0 0 8px var(--color-orange)); */
   padding: 8px;
   margin: 16px;
   cursor: pointer;

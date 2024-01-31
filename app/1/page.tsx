@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import type { MouseEvent } from "react";
 import { processImage } from "./process-image";
-// import Tilt from "react-parallax-tilt";
 
 import "./page.css";
 
@@ -29,25 +29,32 @@ export default function Page() {
   const fileInputRef = useRef(null);
   const [friends, setFriends] = useState<Array<Friend>>([]);
 
+  let mouseX = useMotionValue(0);
+  let mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    let { left, top } = currentTarget.getBoundingClientRect();
+
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
   return (
     <>
       <div className="hidden bg-blue-500 bg-green-500 bg-indigo-500 bg-orange-500 bg-pink-500 bg-purple-500 bg-red-500 bg-rose-500 bg-yellow-500" />
-      <div className="page">
+      <div className="page" onMouseMove={handleMouseMove}>
         <motion.div className="friends outline-none" ref={dragRef}>
           {friends.map((friend, index) => (
             <motion.div
               key={friend.name}
-              className="friend"
+              className="friend group w-[300px]"
               // whileHover={{ scale: 1.1 }}
               // whileTap={{ scale: 0.9 }}
               whileDrag={{ scale: 0.95 }}
               drag
-              // dragConstraints={dragRef}
+              dragConstraints={dragRef}
               dragElastic={0.2}
             >
-              {/* <div className="rounded-lg shadow-xl m-4 w-[320px]"> */}
-              {/* <canvas
-                id={friend.name} */}
               {/* <Tilt
                 glareEnable={true}
                 glareMaxOpacity={0.75}
@@ -112,6 +119,18 @@ export default function Page() {
             </motion.div>
           ))}
         </motion.div>
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-xl transition duration-300"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                100px circle at ${mouseX}px ${mouseY}px,
+                rgba(255, 255, 255, 0.25),
+                transparent 80%
+              )
+            `,
+          }}
+        />
         <input
           type="file"
           ref={fileInputRef}
@@ -143,15 +162,6 @@ export default function Page() {
           whileTap={{ scale: 0.9 }}
           className="addFriend fixed bottom-4 right-4 rounded-full bg-rose-500 p-2 text-white shadow-2xl"
           onClick={() => {
-            // const name = prompt("Friend name") ?? "New friend";
-            // setFriends((f) => [
-            //   ...f,
-            //   {
-            //     name,
-            //     photo: "https://via.placeholder.com/150",
-            //     thoughts: [],
-            //   },
-            // ]);
             // @ts-expect-error click is a function
             fileInputRef.current?.click();
           }}

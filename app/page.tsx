@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const WEEKS = ["Canvas", "Something else"];
+const WEEKS = ["Canvas: Friends Chat", "Spatial: LNG Export Globe"];
 
 export default function Home() {
   return (

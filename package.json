@@ -12,10 +12,13 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.3",
+    "geist": "^1.2.2",
     "lucide-react": "^0.320.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-globe": "^5.0.2",
+    "react-globe.gl": "^2.27.1",
     "react-parallax-tilt": "^1.7.209",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"

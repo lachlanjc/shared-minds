@@ -17,6 +17,7 @@ export function Window({
       as="div"
       className={clsx(styles.window, className)}
     >
+      {/* <div className={styles.blur} aria-hidden /> */}
       {children}
     </Reorder.Item>
   );

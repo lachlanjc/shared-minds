@@ -1,17 +1,15 @@
 .window {
   ---border-radius: var(--radii-3);
   border-radius: var(--radii-3);
-  /* border: 1px solid rgba(255 255 255 / 12%); */
   border: 0 !important;
   background: var(--blackA11);
   color: var(--text-color);
-  /* zoom: 0.75; */
   width: 20vw !important;
   text-select: none;
   position: relative;
+  transition: 0.125s rotate ease-in-out;
 
   box-shadow:
-    /* 0px 8px 30px rgba(0, 0, 0, 0.25), */
     0 8px 24px rgba(0, 0, 0, 0.2),
     0 2px 8px rgba(0, 0, 0, 0.08),
     inset 0 0 0 1px rgba(0, 0, 0, 0.2),
@@ -19,11 +17,9 @@
   backdrop-filter: blur(50px);
 
   &:first-child {
-    /* transform: rotate3d(0, -0.25, 0, -25deg) !important; */
     rotate: y 25deg;
   }
   &:last-child {
-    /* transform: rotate3d(0, -0.25, 0, 25deg) !important; */
     rotate: y -25deg;
   }
 
@@ -49,8 +45,6 @@
 
 .windowPreview {
   padding: 6px;
-  /* width: 36vw; */
-  /* transform: rotate3d(0, 0.25, 0, -15deg); */
 }
 
 .windowToolbar {
@@ -90,9 +84,6 @@
   border: 0;
   width: 100%;
   aspect-ratio: 9 / 16;
-  /* transform: scale(0.6667);
-  transform-origin: 0 0;
-  margin-bottom: -89%; /* no idea why */
 }
 
 .windowContent {

@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-const WEEKS = ["Canvas: Friends Chat", "Spatial: LNG Export Globe"];
+const WEEKS = [
+  "Canvas: Friends Chat",
+  "Spatial: LNG Export Globe",
+  "Draggable: visionOS Windows",
+];
 
 export default function Home() {
   return (
@@ -13,7 +17,8 @@ export default function Home() {
             className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           >
             <h2 className={`mb-0 text-2xl font-semibold`}>
-              Week {i + 1}: {week}
+              <small className="block uppercase opacity-50">Week {i + 1}</small>
+              {week}
             </h2>
             {/* <p className={`mb-0 mt-3 max-w-[30ch] text-sm opacity-50`}>
             Find in-depth information about Next.js features and API.

@@ -1,17 +1,11 @@
 "use client";
 import "./page.css";
 import imgScene from "./IMG_2182.jpeg";
-import imgPhoto from "./IMG_5731.jpeg";
 import Scene from "./scene";
-import {
-  ContentWindow,
-  SafariWindow,
-  PhotoWindow,
-  PhotosWindow,
-} from "./window";
-import { Reorder, motion } from "framer-motion";
+import { ContentWindow, SafariWindow, PhotosWindow } from "./window";
+import { Reorder } from "framer-motion";
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const WINDOWS = {
   content: (
@@ -35,7 +29,6 @@ const WINDOWS = {
 };
 
 export default function Page() {
-  const dragRef = useRef(null);
   const [items, setItems] = useState(["safari", "content", "photo"]);
 
   useEffect(() => {
@@ -48,7 +41,6 @@ export default function Page() {
         as="div"
         axis="x"
         className={clsx("outline-none", "windows")}
-        ref={dragRef}
         values={items}
         onReorder={setItems}
       >

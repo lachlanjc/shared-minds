@@ -4,13 +4,13 @@ import { useStorage, useMutation } from "./liveblocks.config";
 import { useUser } from "@clerk/clerk-react";
 // @ts-expect-error not typed
 import useSound from "use-sound";
-// import texture from "./clouds.png";
+// import popSfx from "../../public/sounds/pop-up-off.mp3";
 
 const FLIGHT_TIME = 5000;
 
 export default function Map() {
   const globeEl = useRef<GlobeMethods | undefined>(undefined);
-  const playPop = useSound("/sounds/pop-up-off.mp3");
+  const [playPop] = useSound("/sounds/pop-up-off.mp3");
 
   const { user, isLoaded } = useUser();
   const liveFriends = useStorage((s) => s.friends);
@@ -23,6 +23,12 @@ export default function Map() {
       storage.get("arcs").delete(index);
     }, FLIGHT_TIME * 2);
   }, []);
+
+  const clearArcs = useMutation(({ storage }) => {
+    storage.get("arcs").clear();
+  }, []);
+  // @ts-expect-error debugging tool
+  window.clearArcs = clearArcs;
 
   const profile =
     isLoaded && user && liveFriends && liveFriends?.length > 0

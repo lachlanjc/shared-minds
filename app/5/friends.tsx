@@ -34,21 +34,21 @@ const FRIENDS: Array<Friend> = [
     github: "tmb",
   },
   // West Lafayette
-  {
-    lat: 40.4259,
-    lng: -86.9081,
-    city: "West Lafayette",
-    name: "Matthew",
-    github: "MatthewStanciu",
-  },
-  // Boston
-  {
-    lat: 42.3601,
-    lng: -71.0589,
-    city: "Boston",
-    name: "Vincent",
-    github: "VincentSpitale",
-  },
+  // {
+  //   lat: 40.4259,
+  //   lng: -86.9081,
+  //   city: "West Lafayette",
+  //   name: "Matthew",
+  //   github: "MatthewStanciu",
+  // },
+  // // Boston
+  // {
+  //   lat: 42.3601,
+  //   lng: -71.0589,
+  //   city: "Boston",
+  //   name: "Vincent",
+  //   github: "VincentSpitale",
+  // },
   // Seattle
   {
     lat: 47.6062,

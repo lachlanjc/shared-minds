@@ -1,0 +1,42 @@
+.dock {
+  appearance: none;
+  outline: none;
+  border-radius: 999px;
+  background: var(--blackA11);
+  padding: 8px;
+  border-radius: 999px;
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  translate: -50%;
+  width: fit-content;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px hsla(0, 0%, 100%, 0.14);
+  backdrop-filter: blur(50px);
+
+  & > button {
+    appearance: none;
+    outline: none;
+    border-radius: 999px;
+    border: 0 !important;
+    background: var(--blackA11);
+    stroke: var(--text-color);
+    padding: 16px;
+    border-radius: 999px;
+    background-color: var(--grayA10);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: inherit;
+  }
+}
+
+.dockMenu {
+}
+.dockMenuItem {
+  text-transform: capitalize;
+}

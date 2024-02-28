@@ -1,10 +1,9 @@
 import Globe, { GlobeMethods } from "react-globe.gl";
 import React, { useRef, useEffect } from "react";
-import { useStorage, useMutation } from "./liveblocks.config";
+import { useStorage, useMutation, type Friend } from "./liveblocks.config";
 import { useUser } from "@clerk/clerk-react";
 // @ts-expect-error not typed
 import useSound from "use-sound";
-// import popSfx from "../../public/sounds/pop-up-off.mp3";
 
 const FLIGHT_TIME = 5000;
 
@@ -61,12 +60,13 @@ export default function Map() {
       htmlElementsData={JSON.parse(JSON.stringify(liveFriends))}
       htmlElement={(friend) => {
         const img = document.createElement("img");
-        img.src = `https://github.com/${friend.github}.png`;
+        const { github, name } = friend as Friend;
+        img.src = `https://github.com/${github}.png`;
         img.width = 48;
         img.height = 48;
-        img.alt = friend.name;
+        img.alt = name;
         img.style.border =
-          user?.username === friend.github
+          user?.username === github
             ? "2px solid #21d7ff"
             : "2px solid rgba(255,255,255,0.5)";
         img.style.borderRadius = "50%";

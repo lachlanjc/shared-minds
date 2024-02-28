@@ -3,7 +3,7 @@ import { SignInButton, useUser } from "@clerk/clerk-react";
 import { useStorage, useMutation } from "./liveblocks.config";
 
 const button =
-  "bg-gray-1000 text-background-100 phover:enabled:border-[#000] phover:enabled:outline-[#ededed]/[0.24] flex h-7 items-center justify-center whitespace-nowrap rounded-[6px] border-2 border-[#ededed]/[0.12] px-2 font-mono text-[13px]/[20px] font-semibold uppercase outline-none outline-[4px] outline-offset-0 outline-[transparent] md:h-8 md:px-4";
+  "bg-gray-1000 text-background-100 focus:enabled:border-[#000] focus:enabled:outline-[#ededed]/[0.24] flex h-7 items-center justify-center whitespace-nowrap rounded-[6px] border-2 border-[#ededed]/[0.12] px-2 font-mono text-[13px]/[20px] font-semibold uppercase outline-none outline-[4px] outline-offset-0 outline-[transparent] md:h-8 md:px-4";
 
 export default function Profile() {
   const { isSignedIn, user, isLoaded } = useUser();

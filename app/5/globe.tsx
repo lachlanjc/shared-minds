@@ -1,19 +1,22 @@
-// @ts-nocheck my liveblocks config is not typed
 import Globe, { GlobeMethods } from "react-globe.gl";
 import React, { useRef, useEffect } from "react";
 import { useStorage, useMutation } from "./liveblocks.config";
 import { useUser } from "@clerk/clerk-react";
+// @ts-expect-error not typed
+import useSound from "use-sound";
 // import texture from "./clouds.png";
 
 const FLIGHT_TIME = 5000;
 
 export default function Map() {
   const globeEl = useRef<GlobeMethods | undefined>(undefined);
+  const playPop = useSound("/sounds/pop-up-off.mp3");
 
   const { user, isLoaded } = useUser();
   const liveFriends = useStorage((s) => s.friends);
   const liveArcs = useStorage((s) => s.arcs);
   const sendArc = useMutation(({ storage }, newArc) => {
+    playPop();
     storage.get("arcs").push(newArc);
     setTimeout(() => {
       const index = storage.get("arcs").indexOf(newArc);
@@ -22,8 +25,8 @@ export default function Map() {
   }, []);
 
   const profile =
-    isLoaded && user && liveFriends?.length > 0
-      ? liveFriends.find((f) => f.github === user.username)
+    isLoaded && user && liveFriends && liveFriends?.length > 0
+      ? liveFriends?.find((f) => f.github === user.username)
       : null;
 
   // debugger;
@@ -58,13 +61,14 @@ export default function Map() {
         img.alt = friend.name;
         img.style.border =
           user?.username === friend.github
-            ? "2px solid cyan"
+            ? "2px solid #21d7ff"
             : "2px solid rgba(255,255,255,0.5)";
         img.style.borderRadius = "50%";
         return img;
       }}
+      // @ts-expect-error wrong shape
       arcsData={liveArcs}
-      arcColor={() => "red"}
+      arcColor={() => "#FF4921"}
       arcDashLength={() => Math.random()}
       arcDashGap={() => Math.random()}
       arcDashAnimateTime={() => Math.random() * 4000 + 500}

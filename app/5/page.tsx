@@ -26,6 +26,14 @@ export default async function ThreeD() {
         </div>
       </div>
       <style>{`
+        :root {
+          --accent: #21d7ff;
+        }
+        @supports (color:color(display-p3 1 1 1)) {
+          :root {
+            --accent: color(display-p3 1 0.356 0.2183);
+          }
+        }
         html {
           color-scheme: dark;
         }

@@ -57,9 +57,9 @@ export default function Map() {
         img.height = 48;
         img.alt = friend.name;
         img.style.border =
-          // isLoaded && user?.github === friend.github
-          //   ? "2px solid red" :
-          "2px solid rgba(255,255,255,0.5)";
+          user?.username === friend.github
+            ? "2px solid cyan"
+            : "2px solid rgba(255,255,255,0.5)";
         img.style.borderRadius = "50%";
         return img;
       }}

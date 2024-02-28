@@ -1,49 +1,35 @@
-import { WorkOS } from "@workos-inc/node";
-import { getUser, signOut, getAuthorizationUrl } from "./auth";
-import App from "./app";
+"use client";
+import dynamic from "next/dynamic";
+const Globe = dynamic(() => import("./globe"), { ssr: false });
+import { RoomProvider } from "./liveblocks.config";
+import { LiveList } from "@liveblocks/client";
+import FRIENDS from "./friends";
+import { UserButton } from "@clerk/nextjs";
+import Profile from "./profile";
 
-// const workos = new WorkOS(process.env.WORKOS_API_KEY);
-
-export default async function WithSession() {
-  const authKitUrl = getAuthorizationUrl();
-  const { isAuthenticated, user } = await getUser();
-
+export default async function ThreeD() {
   return (
-    <>
-      {isAuthenticated ? (
-        <>
-          <h2>Welcome back{user?.firstName && `, ${user?.firstName}`}</h2>
-          <p>You are now authenticated into the application.</p>
-
-          <form
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            <button
-              type="submit"
-              className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-            >
-              Sign-out
-            </button>
-          </form>
-        </>
-      ) : (
-        <>
-          <h1>Sign in to join the fun</h1>
-          <a
-            href={authKitUrl}
-            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-          >
-            Sign in
-          </a>
-        </>
-      )}
-
-      <pre>{JSON.stringify({ user }, null, 2)}</pre>
-
-      <App />
-    </>
+    <RoomProvider
+      id="week-5"
+      initialPresence={{}}
+      initialStorage={{
+        arcs: new LiveList([]),
+        friends: new LiveList(FRIENDS),
+      }}
+    >
+      <Globe />
+      <div className="fixed left-12 top-12 text-white">
+        <h1 className="mb-4 text-3xl font-bold text-white">Friends</h1>
+        <div className="flex gap-4">
+          <UserButton />
+          <Profile />
+        </div>
+      </div>
+      <style>{`
+        html {
+          color-scheme: dark;
+        }
+      `}</style>
+    </RoomProvider>
   );
 }

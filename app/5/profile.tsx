@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "@clerk/clerk-react";
+import { SignInButton, useUser } from "@clerk/clerk-react";
 import { useStorage, useMutation } from "./liveblocks.config";
 
 const button =
@@ -70,5 +70,9 @@ export default function Profile() {
     }
   }
 
-  return <div>Not signed in</div>;
+  return (
+    <SignInButton>
+      <button className={button}>Sign in</button>
+    </SignInButton>
+  );
 }

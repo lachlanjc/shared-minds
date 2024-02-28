@@ -5,6 +5,7 @@ const WEEKS = [
   "Spatial: LNG Export Globe",
   "Draggable: visionOS Windows",
   "Shareable: Friends Globe",
+  "Social: visionOS Authentication",
 ];
 
 export default function Home() {

@@ -6,6 +6,7 @@ const WEEKS = [
   "Draggable: visionOS Windows",
   "Shareable: Friends Globe",
   "Social: Join the Friends Globe",
+  "Dimensions: Teleportation in visionOS",
 ];
 
 export default function Home() {
@@ -22,9 +23,6 @@ export default function Home() {
               <small className="block uppercase opacity-50">Week {i + 1}</small>
               {week}
             </h2>
-            {/* <p className={`mb-0 mt-3 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p> */}
           </Link>
         ))}
       </div>

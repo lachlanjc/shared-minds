@@ -123,3 +123,18 @@ export function NotesWindow(props: WindowProps) {
     </Window>
   );
 }
+
+// TODO: Prompt component
+export function AIPrompt({ prompt }: { prompt: string }) {
+  return (
+    <div className={styles.prompt}>
+      <label>
+        {prompt}
+        <textarea className={styles.windowNotesTextarea} />
+      </label>
+    </div>
+  );
+}
+
+// TODO: Music app
+// TODO: Photo app

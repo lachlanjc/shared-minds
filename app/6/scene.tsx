@@ -1,12 +1,12 @@
 import type { PropsWithChildren } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image, { ImageProps } from "next/image";
 import styles from "./scene.module.css";
 
 function Scene({
   imgSrc,
   imgAlt,
   children,
-}: PropsWithChildren<{ imgSrc: StaticImageData; imgAlt: string }>) {
+}: PropsWithChildren<{ imgSrc: ImageProps["src"]; imgAlt: string }>) {
   return (
     <div className={styles.scene}>
       <Image

@@ -13,16 +13,19 @@ import clsx from "clsx";
 import { useRef, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import styles from "./dock.module.css";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { CheckIcon, ImageIcon, PlusIcon } from "@radix-ui/react-icons";
 
-const APPS = ["safari", "welcome", "photos", "notes"];
+const APPS = ["welcome", "safari", "photos", "notes"];
+const ENVIRONMENTS = ["IMA", "Yosemite", "Mojave", "Catalina", "Big Sur"];
 
 export default function Page() {
+  const [envName, setEnvName] = useState(ENVIRONMENTS[0]);
+  const [envSrc, setEnvSrc] = useState(imgScene);
   const [items, setItems] = useState(["welcome"]);
   const dragRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Scene imgSrc={imgScene} imgAlt="IMA workspace">
+    <Scene imgSrc={envSrc} imgAlt={envName}>
       <motion.div className={clsx("outline-none", "windows")} ref={dragRef}>
         {items.map((item) => {
           switch (item) {
@@ -42,12 +45,11 @@ export default function Page() {
             case "welcome":
               return (
                 <ContentWindow key="welcome" id="welcome" dragRef={dragRef}>
-                  <h1>Welcome to spatial&nbsp;computing</h1>
-                  <p className="mb-8">Drag & scroll your way around.</p>
-                  <h1>Hi :)</h1>
+                  <h1>Welcome to your future computer</h1>
+                  {/* <p className="mb-8">Drag & scroll your way around.</p> */}
                 </ContentWindow>
               );
-            case "photo":
+            case "photos":
               return (
                 <PhotosWindow key="photos" id="photos" dragRef={dragRef} />
               );
@@ -59,11 +61,39 @@ export default function Page() {
       <aside className={styles.dock} role="toolbar">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <button className="openButton" title="Open app">
-              <PlusIcon width={32} height={32} />
+            <button title="Environments">
+              <ImageIcon width={24} height={24} />
             </button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end" className={styles.dockMenu}>
+          <DropdownMenu.Content align="center" className={styles.dockMenu}>
+            {ENVIRONMENTS.map((env) => (
+              <DropdownMenu.Item
+                key={env}
+                onSelect={() => {
+                  setEnvName(env);
+                  // TODO: use Replicate AI to generate these
+                  // setEnvSrc(imgScene);
+                }}
+                className={styles.dockMenuItem}
+                aria-selected={env === envName}
+              >
+                {env}
+                {env === envName && <CheckIcon width={20} height={20} />}
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <button
+              className="openButton"
+              title="Open app"
+              disabled={items.length === APPS.length}
+            >
+              <PlusIcon width={24} height={24} />
+            </button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="center" className={styles.dockMenu}>
             {APPS.filter((app) => !items.includes(app)).map((app) => (
               <DropdownMenu.Item
                 key={app}

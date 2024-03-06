@@ -13,8 +13,8 @@ function Scene({
         src={imgSrc}
         alt={imgAlt}
         fill
-        placeholder="blur"
         className={styles.sceneBg}
+        unoptimized
       />
       <div className={styles.sceneBlur} />
       {children}

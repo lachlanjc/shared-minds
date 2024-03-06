@@ -13,14 +13,31 @@ import clsx from "clsx";
 import { useRef, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import styles from "./dock.module.css";
-import { CheckIcon, ImageIcon, PlusIcon } from "@radix-ui/react-icons";
+import { CheckIcon, PlusIcon } from "@radix-ui/react-icons";
+import { GlobeAmericas } from "react-bootstrap-icons";
+import { getAIImage } from "./ai";
+import Spinner from "./spinner";
 
 const APPS = ["welcome", "safari", "photos", "notes"];
-const ENVIRONMENTS = ["IMA", "Yosemite", "Mojave", "Catalina", "Big Sur"];
+const ENVIRONMENTS = [
+  "IMA",
+  "Yosemite",
+  "Dune",
+  "Big Sur",
+  "Mars",
+  "the Moon",
+  "Paris park",
+  "San Francisco Buena Vista",
+  "San Francisco Golden Gate",
+  "San Francisco Twin Peaks",
+  "San Francisco Dolores Park",
+];
 
 export default function Page() {
   const [envName, setEnvName] = useState(ENVIRONMENTS[0]);
   const [envSrc, setEnvSrc] = useState(imgScene);
+  const [isTransporting, setIsTransporting] = useState(false);
+
   const [items, setItems] = useState(["welcome"]);
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +79,11 @@ export default function Page() {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <button title="Environments">
-              <ImageIcon width={24} height={24} />
+              {isTransporting ? (
+                <Spinner size={24} />
+              ) : (
+                <GlobeAmericas width={24} height={24} />
+              )}
             </button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="center" className={styles.dockMenu}>
@@ -71,8 +92,22 @@ export default function Page() {
                 key={env}
                 onSelect={() => {
                   setEnvName(env);
-                  // TODO: use Replicate AI to generate these
-                  // setEnvSrc(imgScene);
+                  if (env === ENVIRONMENTS[0]) {
+                    setEnvSrc(imgScene);
+                  } else {
+                    setIsTransporting(true);
+                    const width = window.innerWidth - (window.innerWidth % 8);
+                    const height =
+                      window.innerHeight - (window.innerHeight % 8);
+                    getAIImage(
+                      `Panoramic ${env} in the style of Apple Mac wallpapers, photographic realism`,
+                      width,
+                      height,
+                    ).then((url) => {
+                      setEnvSrc(url);
+                      setIsTransporting(false);
+                    });
+                  }
                 }}
                 className={styles.dockMenuItem}
                 aria-selected={env === envName}
@@ -84,7 +119,7 @@ export default function Page() {
           </DropdownMenu.Content>
         </DropdownMenu.Root>
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
+          <DropdownMenu.Trigger asChild disabled={items.length === APPS.length}>
             <button
               className="openButton"
               title="Open app"

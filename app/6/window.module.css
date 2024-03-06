@@ -4,7 +4,7 @@
   border: 0 !important;
   background: var(--blackA11);
   color: var(--text-color);
-  width: 20vw !important;
+  min-width: 20vw !important;
   text-select: none;
   position: relative;
   transition: 0.125s rotate ease-in-out;
@@ -15,13 +15,6 @@
     inset 0 0 0 1px rgba(0, 0, 0, 0.2),
     inset 0 0 0 1px hsla(0, 0%, 100%, 0.14);
   backdrop-filter: blur(50px);
-
-  /* &:first-child {
-    rotate: y 25deg;
-  }
-  &:last-child {
-    rotate: y -25deg;
-  } */
 
   /* Covered area to keep window controls active */
   &::before {
@@ -86,7 +79,8 @@
   }
 }
 
-.windowPreview {
+.windowSafari {
+  min-width: 25vw !important;
   padding: 6px;
 }
 

@@ -4,6 +4,7 @@ import type { PropsWithChildren, Ref, RefObject } from "react";
 import { ArrowTopRightIcon, Cross1Icon } from "@radix-ui/react-icons";
 import Image, { type ImageProps } from "next/image";
 import { motion } from "framer-motion";
+import imgPhoto from "./photo.jpg";
 
 interface WindowProps {
   id: string;
@@ -56,7 +57,7 @@ export function SafariWindow({
   ...props
 }: { url: string; domain: string } & WindowProps) {
   return (
-    <Window className={styles.windowPreview} {...props}>
+    <Window className={styles.windowSafari} {...props}>
       <div className={styles.windowToolbar}>
         <span className={styles.windowToolbarDomain}>{domain}</span>
         <a
@@ -97,19 +98,26 @@ export function PhotosWindow(props: WindowProps) {
   return (
     <Window className={styles.windowPhoto} {...props}>
       <div className={styles.windowPhotoContainer}>
-        {...new Array(5)
+        {/* {...new Array(5)
           .fill(null)
           .map((_, i) => (
             <Image
               key={i}
               unoptimized
               placeholder="blur"
-              src={require(`./gallery/${i + 1}.jpeg`).default}
               alt={`Photo ${i + 1}`}
+              src={require(`../3/gallery/${i + 1}.jpeg`).default}
               className={styles.windowPhotoImage}
               draggable={false}
             />
-          ))}
+          ))} */}
+        <Image
+          placeholder="blur"
+          alt="Photo"
+          src={imgPhoto}
+          className={styles.windowPhotoImage}
+          draggable={false}
+        />
       </div>
       <div className={styles.windowPhotoBlur} aria-hidden />
     </Window>

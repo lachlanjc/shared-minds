@@ -7,6 +7,7 @@ const WEEKS = [
   "Shareable: Friends Globe",
   "Social: Join the Friends Globe",
   "Dimensions: Teleportation in visionOS",
+  "Implicit: Generation in visionOS",
 ];
 
 export default function Home() {

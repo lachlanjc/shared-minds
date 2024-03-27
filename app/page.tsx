@@ -8,6 +8,7 @@ const WEEKS = [
   "Social: Join the Friends Globe",
   "Dimensions: Teleportation in visionOS",
   "Implicit: Generation in visionOS",
+  "Search: Embeddings Search on edu",
 ];
 
 export default function Home() {

@@ -237,7 +237,6 @@ export function MusicWindow(props: WindowProps) {
   );
 }
 
-// TODO: Prompt component
 export function AIPrompt({
   label,
   onSubmit,
